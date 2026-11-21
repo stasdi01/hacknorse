@@ -1,0 +1,41 @@
+sku,name,length_in,width_in,height_in,weight_lb
+CND-04-AMB,Amber Candle 4oz,2.6,2.6,2.8,0.5
+CND-04-FIG,Fig Leaf Candle 4oz,2.6,2.6,2.8,0.5
+CND-04-SEA,Sea Salt Candle 4oz,2.6,2.6,2.8,0.5
+CND-08-AMB,Amber Candle 8oz,3.2,3.2,3.6,0.9
+CND-08-FIG,Fig Leaf Candle 8oz,3.2,3.2,3.6,0.9
+CND-08-SEA,Sea Salt Candle 8oz,3.2,3.2,3.6,0.9
+CND-16-AMB,Amber Candle 16oz,4,4,4.6,1.6
+CND-16-FIG,Fig Leaf Candle 16oz,4,4,4.6,1.6
+CND-16-SEA,Sea Salt Candle 16oz,4,4,4.6,1.6
+MUG-12-OAT,Oatmeal Mug 12oz,5,3.6,4.2,0.9
+MUG-12-MOS,Moss Mug 12oz,5,3.6,4.2,0.9
+MUG-16-OAT,Oatmeal Mug 16oz,5.4,4,4.8,1.1
+MUG-16-MOS,Moss Mug 16oz,5.4,4,4.8,1.1
+BWL-S,Small Bowl,5.5,5.5,2.5,0.8
+BWL-M,Cereal Bowl,7,7,3,1.3
+BWL-L,Serving Bowl,10,10,4,2.8
+PLT-S,Side Plate,8,8,1,1
+PLT-D,Dinner Plate,10.5,10.5,1.1,1.6
+PLT-P,Oval Platter,13,9,1.2,2.2
+VAS-BUD,Bud Vase,3,3,6,0.6
+VAS-M,Medium Vase,5,5,9,1.8
+VAS-T,Tall Vase,6,6,13,2.9
+VAS-W,Wide Vase,8,8,8,3.2
+PLN-S,Small Planter,4.5,4.5,4,1.1
+PLN-M,Medium Planter,6.5,6.5,6,2.2
+PLN-L,Large Planter,9,9,8,4.5
+GFT-TRIO,Candle Trio Gift Set,10,4,4,2
+GFT-MUGC,Mug & Candle Gift Set,9,6,5,2
+GFT-CER,Ceramic Starter Set,12,9,4,3.5
+ACC-MATCH,Matchbox,3,2,0.8,0.1
+ACC-MATCHL,Long Matches,7,2,0.8,0.15
+ACC-TRIM,Wick Trimmer,7,2.5,1,0.3
+ACC-SNUF,Candle Snuffer,8,2.5,1.5,0.3
+ACC-DIP,Wick Dipper,6.5,1,0.5,0.1
+ACC-COAST,Coaster Set,4.5,4.5,1.5,0.9
+ACC-SPOON,Spoon Rest,5,3.5,1,0.4
+ACC-INC,Incense Holder,9,2,1,0.3
+ACC-TEA,Tea Light Set,6,4,1.5,0.6
+ACC-RING,Ring Dish,4,4,1,0.3
+TEA-POT,Teapot,9,6,6,2.5

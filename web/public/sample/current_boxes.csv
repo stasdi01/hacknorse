@@ -1,0 +1,4 @@
+box_id,length_in,width_in,height_in,unit_cost_usd
+Small 8x8x8,8,8,8,0.85
+Medium 12x12x8,12,12,8,1.35
+Large 16x12x12,16,12,12,1.95

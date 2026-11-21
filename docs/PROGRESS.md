@@ -3,7 +3,7 @@
 | #   | Milestone                                           | Status  | Note |
 | --- | --------------------------------------------------- | ------- | ---- |
 | M0  | Scaffold + toolchain proof                          | done    | Rust `version()` → WASM → Web Worker → `/dev` page, verified in dev and prod with Playwright; CI workflow. |
-| M1  | Types, config, stock catalog, sample data generator | pending |      |
+| M1  | Types, config, stock catalog, sample data generator | done    | Rust/TS types + config with sync tests, 83-box stock catalog, deterministic Fern & Kiln sample (40 SKUs, 3,000 orders). |
 | M2  | Packer                                              | pending |      |
 | M3  | Cost model + carrier presets                        | pending |      |
 | M4  | Optimizer + baseline + K-curve (stock mode)         | pending |      |
