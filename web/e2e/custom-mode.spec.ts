@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test("custom mode designs custom box sizes within the time target", async ({ page }) => {
   await page.goto("/app?sample=1");
   await expect(page.getByTestId("results")).toBeVisible({ timeout: 30_000 });
-  await page.getByRole("button", { name: "Settings" }).click();
+  await page.getByRole("button", { name: "Settings", exact: true }).click();
   await page.getByTestId("mode-custom").click();
   const start = Date.now();
   await page.getByTestId("run-optimizer").click();
