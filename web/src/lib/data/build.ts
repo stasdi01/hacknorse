@@ -172,7 +172,7 @@ export function buildOrders(
       file: "orders",
       row: null,
       severity: "warning",
-      message: `${badDates} order date${badDates === 1 ? "" : "s"} could not be read and were ignored.`,
+      message: `${badDates} order date${badDates === 1 ? " could not be read and was" : "s could not be read and were"} ignored.`,
     });
   }
   return { rows, issues, skipped, usable: true };
