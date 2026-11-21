@@ -9,7 +9,7 @@
 | M4  | Optimizer + baseline + K-curve (stock mode)         | done    | Pre-processing, p-median greedy + swap (multi-start), baseline, K-curve 1–8, report assembly. Sample store: 114 ms native release (target < 2 s), saves 8.2%. |
 | M5  | WASM API end-to-end                                 | done    | optimize()/validate()/version() JSON API + progress stages; sample store optimized in the worker and shown as JSON on /dev (Playwright). |
 | M6  | Data step: upload, mapping, validation, templates   | done    | Upload (drag/drop), templates, sample loader, synonym mapping UI with unit selects, validation report; e2e with renamed Shopify-style columns. |
-| M7  | Results dashboard                                   | pending |      |
+| M7  | Results dashboard                                   | done    | Settings step (mode, K, padding, carrier, rate table, units) + KPI cards, before/after bars, clickable K-curve, box tables, paginated orders table, flagged panel. |
 | M8  | 3D viewer                                           | pending |      |
 | M9  | Export                                              | pending |      |
 | M10 | Landing page + design polish + units toggle         | pending |      |
