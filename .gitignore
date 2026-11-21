@@ -9,3 +9,4 @@ node_modules/
 # Secrets
 .env*
 !.env.example
+bench/instance.json

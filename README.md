@@ -198,6 +198,11 @@ All constants live in [`engine/src/config.rs`](engine/src/config.rs) and
 | Padding                      | 0.5 in per side (0–2 in in UI)                         | default                      |
 | Landing-page facts           | placeholders                                           | team to fill in with sources |
 
+## Benchmark
+
+[bench/README.md](bench/README.md): the same 80,427 fit checks from the sample store in Rust and in a
+pure-Python port give identical answers; Rust is about 55× faster (14 ms vs. 800 ms).
+
 ## Project docs
 
 - [docs/PRD.md](docs/PRD.md): specification

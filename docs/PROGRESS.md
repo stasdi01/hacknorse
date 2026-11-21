@@ -17,4 +17,4 @@
 | M12 | Validation + /method page                           | done    | validate(): 25-candidate reduced instance, brute force over all 2- and 3-box sets; /method page (pipeline, p-median, packer, live validation: 0.00% gap, assumptions, privacy). |
 | M13 | E2E + docs + local production check                 | done    | Playwright smoke (landing → sample → KPIs + 3D canvas) and 11 e2e tests pass on pnpm start and pnpm dev; README (run steps, Mermaid, screenshots, tests, assumptions, CI badge) and METHOD.md complete. |
 | S1  | AI column mapping                                   | skipped | Later, per PRD. |
-| S2  | Python benchmark (stretch)                          | pending |      |
+| S2  | Python benchmark (stretch)                          | done    | bench/python_packer.py (pure-Python port) vs Rust on 80,427 sample fit checks: 100% agreement, Rust ≈ 55× faster; table in bench/README.md. |
