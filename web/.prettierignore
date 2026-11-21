@@ -1,0 +1,8 @@
+node_modules
+.next
+out
+src/engine-wasm
+pnpm-lock.yaml
+public/sample
+playwright-report
+test-results

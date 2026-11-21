@@ -1,2 +1,11 @@
 # Local-only instructions for Claude Code
 CLAUDE.md
+# Build output
+target/
+node_modules/
+.next/
+.DS_Store
+
+# Secrets
+.env*
+!.env.example
