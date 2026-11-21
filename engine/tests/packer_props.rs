@@ -63,3 +63,21 @@ proptest! {
         }
     }
 }
+
+proptest! {
+    #![proptest_config(ProptestConfig::with_cases(500))]
+
+    /// Compact packing in the custom-mode container is always valid, and the
+    /// tight box designed from it fits its items.
+    #[test]
+    fn compact_packing_is_valid_and_tight_box_fits(
+        items in prop::collection::vec(dims(0.5, 10.0), 1..10),
+        padding in dim(0.0, 1.0),
+    ) {
+        let container = [60.0, 60.0, 60.0];
+        let p = box_engine::packer::pack_compact(&items, container).expect("fits in container");
+        prop_assert!(placement_is_valid(&items, &p, container));
+        let b = box_engine::candidates::tight_box(&items, padding).expect("tight box");
+        prop_assert!(fits(&items, b, padding).is_some());
+    }
+}

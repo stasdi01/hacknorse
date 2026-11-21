@@ -98,13 +98,7 @@ pub fn fits(items: &[Dims], box_dims: Dims, padding: f64) -> Option<Vec<Placed>>
     }
 
     // Attempt 1: volume descending (tie: longest side).
-    let mut order: Vec<usize> = (0..items.len()).collect();
-    order.sort_by(|&a, &b| {
-        volume(items[b])
-            .total_cmp(&volume(items[a]))
-            .then(sorted_desc(items[b])[0].total_cmp(&sorted_desc(items[a])[0]))
-            .then(a.cmp(&b))
-    });
+    let mut order = volume_order(items);
     if let Some(p) = extreme_point_pack(items, &order, usable) {
         return Some(p);
     }
@@ -175,6 +169,103 @@ fn extreme_point_pack(items: &[Dims], order: &[usize], usable: Dims) -> Option<V
             [pos[0], pos[1], pos[2] + size[2]],
         ] {
             let inside = (0..3).all(|i| np[i] < usable[i] - EPS);
+            let dup = points
+                .iter()
+                .any(|q| (0..3).all(|i| (q[i] - np[i]).abs() <= EPS));
+            if inside && !dup {
+                points.push(np);
+            }
+        }
+    }
+    placed.sort_by_key(|p| p.item);
+    Some(placed)
+}
+
+/// Items in "volume descending, tie longest side" order (attempt 1 of [`fits`]).
+pub fn volume_order(items: &[Dims]) -> Vec<usize> {
+    let mut order: Vec<usize> = (0..items.len()).collect();
+    order.sort_by(|&a, &b| {
+        volume(items[b])
+            .total_cmp(&volume(items[a]))
+            .then(sorted_desc(items[b])[0].total_cmp(&sorted_desc(items[a])[0]))
+            .then(a.cmp(&b))
+    });
+    order
+}
+
+/// Bounding box (from the origin) of a placement.
+pub fn bounding_box(placed: &[Placed]) -> Dims {
+    let mut bb = [0.0f64; 3];
+    for p in placed {
+        for (a, v) in bb.iter_mut().enumerate() {
+            *v = v.max(p.pos[a] + p.size[a]);
+        }
+    }
+    bb
+}
+
+/// Plain extreme-point packing (attempt-1 order) inside a large container.
+pub fn extreme_point_in_container(items: &[Dims], container: Dims) -> Option<Vec<Placed>> {
+    extreme_point_pack(items, &volume_order(items), container)
+}
+
+/// "Compact" packing inside a large container: like the extreme-point
+/// heuristic, but each item goes to the (point, orientation) that gives the
+/// smallest bounding box (volume, then longest side; ties keep the
+/// (z, y, x) point order). Used to design tight custom boxes.
+pub fn pack_compact(items: &[Dims], container: Dims) -> Option<Vec<Placed>> {
+    let mut placed: Vec<Placed> = Vec::with_capacity(items.len());
+    let mut points: Vec<Dims> = vec![[0.0; 3]];
+    let mut bb = [0.0f64; 3];
+    for idx in volume_order(items) {
+        points.sort_by(|a, b| {
+            a[2].total_cmp(&b[2])
+                .then(a[1].total_cmp(&b[1]))
+                .then(a[0].total_cmp(&b[0]))
+        });
+        let mut best: Option<(usize, Dims, f64, f64)> = None;
+        for (pi, &p) in points.iter().enumerate() {
+            for o in orientations(items[idx]) {
+                if (0..3).any(|i| p[i] + o[i] > container[i] + EPS) {
+                    continue;
+                }
+                if placed.iter().any(|q| overlaps(p, o, q.pos, q.size)) {
+                    continue;
+                }
+                let nb = [
+                    bb[0].max(p[0] + o[0]),
+                    bb[1].max(p[1] + o[1]),
+                    bb[2].max(p[2] + o[2]),
+                ];
+                let vol = volume(nb);
+                let longest = sorted_desc(nb)[0];
+                let better = match best {
+                    None => true,
+                    Some((_, _, bv, bl)) => {
+                        vol < bv - EPS || ((vol - bv).abs() <= EPS && longest < bl - EPS)
+                    }
+                };
+                if better {
+                    best = Some((pi, o, vol, longest));
+                }
+            }
+        }
+        let (pi, size, _, _) = best?;
+        let pos = points.swap_remove(pi);
+        for (a, v) in bb.iter_mut().enumerate() {
+            *v = v.max(pos[a] + size[a]);
+        }
+        placed.push(Placed {
+            item: idx,
+            pos,
+            size,
+        });
+        for np in [
+            [pos[0] + size[0], pos[1], pos[2]],
+            [pos[0], pos[1] + size[1], pos[2]],
+            [pos[0], pos[1], pos[2] + size[2]],
+        ] {
+            let inside = (0..3).all(|i| np[i] < container[i] - EPS);
             let dup = points
                 .iter()
                 .any(|q| (0..3).all(|i| (q[i] - np[i]).abs() <= EPS));

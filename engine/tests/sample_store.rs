@@ -69,3 +69,38 @@ fn optimize_is_deterministic() {
     b.timings_ms = Default::default();
     assert_eq!(a, b);
 }
+
+#[test]
+fn custom_mode_on_sample_store() {
+    let input = common::sample_input(Mode::Custom);
+    let t = Instant::now();
+    let report = run_optimize(&input).expect("optimize");
+    let elapsed = t.elapsed().as_secs_f64();
+    println!(
+        "sample custom: {:.0} ms, {} candidates, savings ${:.0}/yr ({:.1}%), empty {:.1}% -> {:.1}%, boxes {:?}",
+        elapsed * 1000.0,
+        report.stats.candidates,
+        report.summary.savings_usd,
+        report.summary.savings_pct,
+        report.summary.baseline.empty_space_pct,
+        report.summary.optimized.empty_space_pct,
+        report.recommended.iter().map(|b| b.box_id.clone()).collect::<Vec<_>>(),
+    );
+    println!("  timings {:?}", report.timings_ms);
+    // Performance target: < 10 s (release build; debug builds get slack).
+    let limit = if cfg!(debug_assertions) { 120.0 } else { 10.0 };
+    assert!(elapsed < limit, "took {elapsed:.2} s");
+    assert!(report.stats.candidates > 0);
+    assert!(report
+        .recommended
+        .iter()
+        .all(|b| b.source == box_engine::types::BoxSource::Custom));
+    for w in report.curve.windows(2) {
+        assert!(w[1].total_usd <= w[0].total_usd + 1e-6);
+    }
+    // Every packable order fits some custom candidate.
+    assert!(report
+        .flagged
+        .iter()
+        .all(|f| f.reason != box_engine::types::FlagReason::FitsNoCandidate));
+}
