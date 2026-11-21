@@ -66,12 +66,16 @@ pub struct Model {
     pub timings: Timings,
 }
 
+/// Progress callback: receives a short stage text ("Checking fits…").
+pub type Progress<'a> = &'a mut dyn FnMut(&str);
+
 /// Run pre-processing, candidate generation and the fit/cost matrices.
-pub fn build_model(input: &OptimizeInput) -> Result<Model, String> {
+pub fn build_model(input: &OptimizeInput, progress: Progress) -> Result<Model, String> {
     check_input(input)?;
     let s = &input.settings;
     let mut timings = Timings::default();
 
+    progress("Deduplicating orders…");
     let t0 = now_ms();
     let prepared = prepare(input);
     if prepared.signatures.is_empty() && prepared.too_large.is_empty() {
@@ -80,6 +84,10 @@ pub fn build_model(input: &OptimizeInput) -> Result<Model, String> {
     let t1 = now_ms();
     timings.preprocess_ms = t1 - t0;
 
+    progress(match s.mode {
+        Mode::Stock => "Loading stock box catalog…",
+        Mode::Custom => "Designing custom box sizes…",
+    });
     let mut candidates = match s.mode {
         Mode::Stock => stock_candidates(),
         Mode::Custom => custom_candidates(&prepared.signatures, s.padding_in),
@@ -95,6 +103,7 @@ pub fn build_model(input: &OptimizeInput) -> Result<Model, String> {
     let t2 = now_ms();
     timings.candidates_ms = t2 - t1;
 
+    progress("Checking fits…");
     let mut cache = FitCache::new();
     let weights: Vec<f64> = prepared
         .signatures
@@ -157,13 +166,23 @@ fn eval(sig: &Signature, b: &CandidateBox, s: &Settings) -> CostEval {
 
 /// Run the whole optimization and build the report.
 pub fn run_optimize(input: &OptimizeInput) -> Result<Report, String> {
+    run_optimize_with_progress(input, &mut |_| {})
+}
+
+/// [`run_optimize`] with stage updates.
+pub fn run_optimize_with_progress(
+    input: &OptimizeInput,
+    progress: Progress,
+) -> Result<Report, String> {
     let start = now_ms();
-    let mut model = build_model(input)?;
+    let mut model = build_model(input, progress)?;
+    progress("Optimizing…");
 
     let t_opt = now_ms();
     let curve_solutions = optimize_curve(&model.cand_matrix, &model.servable, MAX_K as usize);
     model.timings.optimize_ms = now_ms() - t_opt;
 
+    progress("Building report…");
     let t_rep = now_ms();
     let mut report = build_report(input, &mut model, &curve_solutions);
     model.timings.report_ms = now_ms() - t_rep;

@@ -23,3 +23,5 @@ Format: date — decision — reason.
 - 2026-11-21 — `CurvePoint` has an `orders_unserved` field. — With few box sizes, some signatures may fit only boxes that are not selected; the curve shows how many.
 - 2026-11-21 — Signature ids are frequency ranks (0 = most frequent), so "top 50 signatures" for the 3D viewer are ids 0–49. — Simple and deterministic.
 - 2026-11-21 — Empty space and all `*_pct` fields are percentages (0–100). — Consistent display.
+- 2026-11-21 — Besides `optimize`, `validate` and `version`, the WASM module exports `optimize_with_progress(input_json, on_stage)`; the worker uses it to post stage texts ("Checking fits…") while the engine runs. Input and output stay JSON strings. — PRD 8.8 asks for stage text in the UI; a synchronous WASM call cannot report progress otherwise.
+- 2026-11-21 — The `/dev` page stays in the app as an engine diagnostics page (version + raw report JSON). — Useful for the team; it is not linked from the main navigation.

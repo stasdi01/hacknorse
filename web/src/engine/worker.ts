@@ -31,10 +31,18 @@ self.onmessage = async (event: MessageEvent<EngineRequest>) => {
       case "version":
         output = engine.version();
         break;
+      case "optimize":
+        output = engine.optimize_with_progress(input, (text: string) =>
+          post({ id, kind: "stage", text }),
+        );
+        break;
+      case "validate":
+        post({ id, kind: "stage", text: "Running brute force…" });
+        output = engine.validate(input);
+        break;
       default:
         throw new Error(`Unknown engine method: ${String(method)}`);
     }
-    void input;
     post({ id, kind: "result", output });
   } catch (err) {
     post({ id, kind: "error", message: err instanceof Error ? err.message : String(err) });

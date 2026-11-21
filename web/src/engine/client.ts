@@ -3,6 +3,7 @@
  * here; the WASM module never runs on the main thread.
  */
 import type { EngineMethod, EngineRequest, EngineResponse } from "./protocol";
+import type { OptimizeInput, Report, ValidationReport } from "./types";
 
 type StageListener = (text: string) => void;
 
@@ -64,4 +65,29 @@ export function callEngine(
 /** Engine version string. */
 export function engineVersion(): Promise<string> {
   return callEngine("version");
+}
+
+/** Parse engine output JSON; throw if it is an `{"error": ...}` object. */
+export function parseEngineOutput<T>(output: string): T {
+  const value: unknown = JSON.parse(output);
+  if (value !== null && typeof value === "object" && "error" in value) {
+    const { error } = value as { error: unknown };
+    throw new Error(typeof error === "string" ? error : "Engine error");
+  }
+  return value as T;
+}
+
+/** Run the optimizer in the worker. */
+export async function optimize(input: OptimizeInput, onStage?: StageListener): Promise<Report> {
+  const out = await callEngine("optimize", JSON.stringify(input), onStage);
+  return parseEngineOutput<Report>(out);
+}
+
+/** Run the brute-force validation in the worker. */
+export async function validate(
+  input: OptimizeInput,
+  onStage?: StageListener,
+): Promise<ValidationReport> {
+  const out = await callEngine("validate", JSON.stringify(input), onStage);
+  return parseEngineOutput<ValidationReport>(out);
 }

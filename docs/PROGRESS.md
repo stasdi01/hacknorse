@@ -7,7 +7,7 @@
 | M2  | Packer                                              | done    | Exact single-item rule, two-pass extreme-point heuristic, (signature, box) cache; 4 proptest properties × 2000 cases. |
 | M3  | Cost model + carrier presets                        | done    | Box weight, DIM (139 / 166 + USPS 1 ft³ rule), billable ceil, linear rate table, stock/custom cost estimates; unit tests. |
 | M4  | Optimizer + baseline + K-curve (stock mode)         | done    | Pre-processing, p-median greedy + swap (multi-start), baseline, K-curve 1–8, report assembly. Sample store: 114 ms native release (target < 2 s), saves 8.2%. |
-| M5  | WASM API end-to-end                                 | pending |      |
+| M5  | WASM API end-to-end                                 | done    | optimize()/validate()/version() JSON API + progress stages; sample store optimized in the worker and shown as JSON on /dev (Playwright). |
 | M6  | Data step: upload, mapping, validation, templates   | pending |      |
 | M7  | Results dashboard                                   | pending |      |
 | M8  | 3D viewer                                           | pending |      |
