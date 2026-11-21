@@ -3,7 +3,13 @@ import { expect, test } from "@playwright/test";
 test("results dashboard shows every section for the sample store", async ({ page }) => {
   await page.goto("/app?sample=1");
   await expect(page.getByTestId("results")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId("kpi-air")).toContainText("Air shipped");
+  await expect(page.getByTestId("kpi-air")).toContainText("→");
+  await expect(page.getByTestId("kpi-void")).toContainText("Void fill needed");
   for (const id of [
+    "kpi-air",
+    "kpi-void",
+    "kpi-secondary",
     "kpi-empty",
     "kpi-savings",
     "kpi-cardboard",
@@ -23,6 +29,7 @@ test("results dashboard shows every section for the sample store", async ({ page
   // Metric display toggle converts units.
   await page.getByTestId("units-metric").click();
   await expect(page.getByTestId("kpi-cardboard")).toContainText("kg");
+  await expect(page.getByTestId("kpi-void")).toContainText("m³");
   await expect(page.getByTestId("recommended-table")).toContainText("cm");
 
   // Changing K re-runs the optimizer.

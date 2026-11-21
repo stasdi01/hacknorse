@@ -1,7 +1,8 @@
 //! On tiny instances built from real box geometry, greedy + swap equals
 //! brute force (PRD §12).
 
-use box_engine::cost::{evaluate, stock_unit_cost};
+use box_engine::config::VOID_FILL_USD_PER_FT3;
+use box_engine::cost::{evaluate, stock_unit_cost, CostParams};
 use box_engine::optimizer::{brute_force, optimize_curve, CostMatrix};
 use box_engine::packer::{fits, Dims};
 use box_engine::types::{CarrierPreset, RateTable};
@@ -22,10 +23,15 @@ impl Lcg {
 
 fn instance(seed: u64, n_sigs: usize, n_boxes: usize) -> (CostMatrix, Vec<usize>) {
     let mut g = Lcg(seed);
-    let table = RateTable {
-        base_usd: 8.5,
-        per_lb_usd: 0.95,
-        max_lb: 70.0,
+    let params = CostParams {
+        carrier: CarrierPreset::UpsFedex,
+        rate_table: RateTable {
+            base_usd: 8.5,
+            per_lb_usd: 0.95,
+            max_lb: 70.0,
+        },
+        padding_in: 0.5,
+        void_fill_usd_per_ft3: VOID_FILL_USD_PER_FT3,
     };
     let boxes: Vec<Dims> = (0..n_boxes)
         .map(|_| [g.dim(4.0, 20.0), g.dim(4.0, 16.0), g.dim(2.0, 14.0)])
@@ -44,14 +50,7 @@ fn instance(seed: u64, n_sigs: usize, n_boxes: usize) -> (CostMatrix, Vec<usize>
         let weight = vol * 0.02;
         for (c, b) in boxes.iter().enumerate() {
             if fits(items, *b, 0.5).is_some() {
-                let e = evaluate(
-                    vol,
-                    weight,
-                    *b,
-                    stock_unit_cost(*b),
-                    CarrierPreset::UpsFedex,
-                    &table,
-                );
+                let e = evaluate(vol, weight, *b, stock_unit_cost(*b), &params);
                 m.set(r, c, e.total_usd);
             }
         }

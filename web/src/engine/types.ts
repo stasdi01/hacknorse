@@ -61,6 +61,8 @@ export interface Settings {
   rate_table: RateTable;
   /** Also allow the seller's current boxes as candidates. */
   allow_current_boxes: boolean;
+  /** Void-fill material cost per ft³ of void volume. */
+  void_fill_usd_per_ft3: number;
 }
 
 /** Input to `optimize` and `validate`. */
@@ -119,11 +121,17 @@ export interface Totals {
   orders: number;
   shipping_usd: number;
   box_usd: number;
+  void_fill_usd: number;
+  /** Shipping + boxes + void fill. */
   total_usd: number;
   /** 1 − Σ item volume / Σ interior volume. */
   empty_space_pct: number;
   cardboard_lb: number;
   shipped_ft3: number;
+  /** Interior volume not occupied by items (padding included). */
+  air_ft3: number;
+  /** Usable volume (inside the padding) not occupied by items. */
+  void_fill_ft3: number;
 }
 
 /** Baseline vs. optimized summary. */
@@ -135,6 +143,8 @@ export interface Summary {
   savings_pct: number;
   cardboard_saved_lb: number;
   shipped_ft3_saved: number;
+  air_ft3_saved: number;
+  void_fill_ft3_saved: number;
   /** Orders (per year) served by each scenario, and flagged. */
   baseline_orders_served: number;
   baseline_orders_flagged: number;
@@ -173,10 +183,13 @@ export interface BoxMetrics {
   billable_lb: number;
   shipping_usd: number;
   box_usd: number;
+  void_fill_usd: number;
   total_usd: number;
   empty_space_pct: number;
   cardboard_lb: number;
   shipped_ft3: number;
+  air_ft3: number;
+  void_fill_ft3: number;
 }
 
 /** A signature with its baseline and optimized box. */

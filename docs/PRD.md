@@ -268,8 +268,28 @@ hacknorse/
 | M11 | Custom mode                                         | Candidate generator + UI toggle; performance target met                                                                                      |
 | M12 | Validation + /method page                           | Brute-force comparison shown with the gap %                                                                                                  |
 | M13 | E2E + docs + local production check                 | Playwright smoke passes; README complete; `pnpm build && pnpm start` works locally                                                           |
+| M14 | Model realism and headline metrics                  | ~150–200 stock sizes; void-fill cost in the optimized total; air shipped and void fill as primary KPIs; sample results table for K = 2…8   |
 | S1  | (LATER — skip in this build) AI column mapping      | —                                                                                                                                            |
 | S2  | (Stretch) Python benchmark                          | `bench/python_packer.py` + `bench/README.md` comparing the same fit checks; results table                                                    |
+
+### M14 — Model realism and headline metrics
+
+1. **Stock catalog realism:** expand `engine/data/stock_boxes.json` to about 150–200 common
+   standard corrugated sizes, with 1-inch steps for small boxes (e.g. 4×4×4, 5×5×5, 6×4×4, 6×6×4,
+   7×5×5, 7×7×7, 8×6×4, 8×6×6, 9×9×9 …) plus the larger sizes already listed. Keep the price
+   formula.
+2. **Void fill cost:** add a void-fill material cost per cubic foot to the cost model
+   (void volume = usable volume − item volume). It lives in `config.rs` and `defaults.ts`
+   (marked `// ASSUMPTION: verify before presenting`), is editable in Settings, and is part of the
+   total cost the optimizer minimizes.
+3. **Headline metrics:** the primary KPI cards are "Air shipped per year (ft³): before → after
+   (−X%)" and "Void fill needed per year: before → after", next to $ saved and cardboard saved.
+   Empty space % stays as a secondary metric. `/method` explains why padding counts as empty space
+   and why air volume is the better measure.
+4. **Results table:** re-run the sample store and record in `docs/PROGRESS.md`, for K = 2…8 in
+   stock and custom mode: cost savings %, air shipped before/after, void fill before/after and
+   cardboard before/after, plus the void-fill cost value used. The sample data and the padding
+   default are not changed.
 
 ## 14. Risks and fallbacks
 

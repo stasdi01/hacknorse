@@ -90,12 +90,24 @@ export function PrintReport({ report: r, names, units, storeLabel, onBack }: Pro
           </thead>
           <tbody>
             <tr>
-              <td className={td}>Shipping + boxes</td>
+              <td className={td}>Shipping + boxes + void fill</td>
               <td className={tdr}>{usd(s.baseline.total_usd)}</td>
               <td className={tdr}>{usd(s.optimized.total_usd)}</td>
               <td className={tdr}>
                 −{usd(s.savings_usd)} ({pct(s.savings_pct, 1)})
               </td>
+            </tr>
+            <tr>
+              <td className={td}>Air shipped</td>
+              <td className={tdr}>{v(s.baseline.air_ft3)}</td>
+              <td className={tdr}>{v(s.optimized.air_ft3)}</td>
+              <td className={tdr}>−{v(s.air_ft3_saved)}</td>
+            </tr>
+            <tr>
+              <td className={td}>Void fill needed</td>
+              <td className={tdr}>{v(s.baseline.void_fill_ft3)}</td>
+              <td className={tdr}>{v(s.optimized.void_fill_ft3)}</td>
+              <td className={tdr}>−{v(s.void_fill_ft3_saved)}</td>
             </tr>
             <tr>
               <td className={td}>Empty space in boxes</td>

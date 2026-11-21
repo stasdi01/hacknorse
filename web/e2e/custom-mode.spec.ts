@@ -12,3 +12,12 @@ test("custom mode designs custom box sizes within the time target", async ({ pag
   await expect(page.getByTestId("recommended-table")).toContainText("custom");
   await expect(page.getByTestId("recommended-boxes")).toContainText("minimum order quantity");
 });
+
+test("void fill cost is editable in settings and used in the results", async ({ page }) => {
+  await page.goto("/app?sample=1");
+  await expect(page.getByTestId("kpi-void")).toContainText("$0.50/ft³", { timeout: 30_000 });
+  await page.getByRole("button", { name: "Settings", exact: true }).click();
+  await page.getByLabel("Per ft³ of void").fill("1.25");
+  await page.getByTestId("run-optimizer").click();
+  await expect(page.getByTestId("kpi-void")).toContainText("$1.25/ft³", { timeout: 30_000 });
+});

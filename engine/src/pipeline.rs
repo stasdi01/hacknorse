@@ -5,7 +5,7 @@ use crate::baseline::cheapest_assignment;
 use crate::candidates::{custom_candidates, stock_candidates, CandidateBox};
 use crate::clock::now_ms;
 use crate::config::*;
-use crate::cost::{evaluate, volume_in3, CostEval};
+use crate::cost::{evaluate, volume_in3, CostEval, CostParams};
 use crate::optimizer::{optimize_curve, CostMatrix, Solution};
 use crate::packer::{FitCache, Placed};
 use crate::prep::{prepare, Prepared, Signature};
@@ -31,6 +31,9 @@ pub fn check_input(input: &OptimizeInput) -> Result<(), String> {
         || !(r.max_lb.is_finite() && r.max_lb >= 1.0)
     {
         return Err("rate_table values must be non-negative numbers (max_lb ≥ 1)".into());
+    }
+    if !(s.void_fill_usd_per_ft3.is_finite() && s.void_fill_usd_per_ft3 >= 0.0) {
+        return Err("void_fill_usd_per_ft3 must be a non-negative number".into());
     }
     if input.products.is_empty() {
         return Err("no products".into());
@@ -159,8 +162,7 @@ fn eval(sig: &Signature, b: &CandidateBox, s: &Settings) -> CostEval {
         sig.weight_lb,
         b.dims,
         b.unit_cost,
-        s.carrier,
-        &s.rate_table,
+        &CostParams::from_settings(s),
     )
 }
 
@@ -196,9 +198,12 @@ struct Acc {
     orders: f64,
     shipping: f64,
     boxes: f64,
+    void_fill_usd: f64,
     item_vol: f64,
     interior: f64,
     cardboard: f64,
+    air_ft3: f64,
+    void_fill_ft3: f64,
 }
 
 impl Acc {
@@ -206,9 +211,12 @@ impl Acc {
         self.orders += w;
         self.shipping += w * e.shipping_usd;
         self.boxes += w * e.box_usd;
+        self.void_fill_usd += w * e.void_fill_usd;
         self.item_vol += w * sig.volume_in3;
         self.interior += w * e.interior_in3;
         self.cardboard += w * e.cardboard_lb;
+        self.air_ft3 += w * e.air_ft3;
+        self.void_fill_ft3 += w * e.void_fill_ft3;
     }
 
     fn totals(&self, factor: f64) -> Totals {
@@ -216,7 +224,10 @@ impl Acc {
             orders: self.orders * factor,
             shipping_usd: self.shipping * factor,
             box_usd: self.boxes * factor,
-            total_usd: (self.shipping + self.boxes) * factor,
+            void_fill_usd: self.void_fill_usd * factor,
+            total_usd: (self.shipping + self.boxes + self.void_fill_usd) * factor,
+            air_ft3: self.air_ft3 * factor,
+            void_fill_ft3: self.void_fill_ft3 * factor,
             empty_space_pct: if self.interior > 0.0 {
                 (1.0 - self.item_vol / self.interior) * 100.0
             } else {
@@ -400,6 +411,8 @@ fn build_report(input: &OptimizeInput, model: &mut Model, curve: &[Solution]) ->
         },
         cardboard_saved_lb: baseline.cardboard_lb - optimized.cardboard_lb,
         shipped_ft3_saved: baseline.shipped_ft3 - optimized.shipped_ft3,
+        air_ft3_saved: baseline.air_ft3 - optimized.air_ft3,
+        void_fill_ft3_saved: baseline.void_fill_ft3 - optimized.void_fill_ft3,
         baseline_orders_served: base_served * factor,
         baseline_orders_flagged: (used - base_served) * factor,
         optimized_orders_served: opt_served * factor,

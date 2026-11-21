@@ -164,7 +164,7 @@ export function SettingsForm({
                 <span>
                   <span className="font-medium">Stock catalog</span>
                   <span className="block text-xs text-muted-foreground">
-                    ~80 common corrugated sizes you can buy off the shelf.
+                    170 standard corrugated sizes you can buy off the shelf.
                   </span>
                 </span>
               </label>
@@ -264,6 +264,18 @@ export function SettingsForm({
               />
             </div>
           </Field>
+          <Field
+            label="Void fill cost (estimate)"
+            hint="Air pillows or paper per cubic foot of empty space inside the padding. Part of the total cost we minimize."
+          >
+            <RateInput
+              id="void-fill-cost"
+              label="Per ft³ of void"
+              prefix="$"
+              value={settings.void_fill_usd_per_ft3}
+              onChange={(v) => set("void_fill_usd_per_ft3", v)}
+            />
+          </Field>
           <Field label="Units display">
             <UnitsToggle value={wb.units} onChange={wb.setDisplayUnits} />
           </Field>
@@ -281,7 +293,9 @@ export function settingsValid(s: Settings): boolean {
   return (
     [r.base_usd, r.per_lb_usd].every((v) => Number.isFinite(v) && v >= 0) &&
     Number.isFinite(r.max_lb) &&
-    r.max_lb >= 1
+    r.max_lb >= 1 &&
+    Number.isFinite(s.void_fill_usd_per_ft3) &&
+    s.void_fill_usd_per_ft3 >= 0
   );
 }
 

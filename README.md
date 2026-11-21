@@ -115,7 +115,7 @@ flowchart LR
 engine/            Rust crate (lib + wasm bindings)
   src/             types, config, prep, candidates, packer, cost, optimizer,
                    baseline, pipeline, validate, lib (JSON API)
-  data/            stock_boxes.json (83 stock sizes)
+  data/            stock_boxes.json (170 standard stock sizes)
   tests/           integration, property and brute-force tests
 web/               Next.js app
   src/config       app.ts (APP_NAME)
@@ -138,7 +138,7 @@ Full write-up: [docs/METHOD.md](docs/METHOD.md) and the `/method` page in the ap
 
 1. **Pre-process:** expand line items, look up dimensions and weights, group identical orders
    into order types ("signatures") with a count, annualize from order dates.
-2. **Candidates:** about 80 stock box sizes, or (custom mode) a tight box designed for each order
+2. **Candidates:** 170 standard stock box sizes (1-inch steps for small boxes), or (custom mode) a tight box designed for each order
    type, rounded up to 0.5 in, at most 300.
 3. **Fit check (packer):** single items use an exact rule (sorted dims); several items use an
    extreme-point heuristic (Crainic, Perboli & Tadei, 2008, simplified). It is conservative:
@@ -195,6 +195,7 @@ All constants live in [`engine/src/config.rs`](engine/src/config.rs) and
 | Board weight                 | 0.13 lb/ft² (single wall)                              | verify with supplier         |
 | Stock box price              | $0.20 + $0.0015 × surface area (in²)                   | estimate                     |
 | Custom box price             | stock formula × 1.25                                   | estimate                     |
+| Void fill cost               | $0.50 per ft³ of void (usable volume − item volume)    | verify with supplier; editable in UI |
 | Padding                      | 0.5 in per side (0–2 in in UI)                         | default                      |
 | Landing-page facts           | placeholders                                           | team to fill in with sources |
 

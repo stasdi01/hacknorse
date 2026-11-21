@@ -30,8 +30,9 @@ All units are inches, pounds and US dollars inside the engine.
 
 ## 3. Candidate boxes (`engine/src/candidates.rs`)
 
-- **Stock mode:** 83 common corrugated sizes (`engine/data/stock_boxes.json`): cubes from 4 to
-  24 in plus common rectangles. Unit cost estimate: `0.20 + 0.0015 × surface area (in²)`.
+- **Stock mode:** 170 standard corrugated sizes (`engine/data/stock_boxes.json`): 16 cubes from
+  4 to 24 in, small sizes in 1-inch steps (5×4×3 up to 12×12×10) and larger standard sizes up to
+  24×24×12. Unit cost estimate: `0.20 + 0.0015 × surface area (in²)`.
 - **Custom mode:** one tight box per signature.
   - Single item: sorted item dims + 2 × padding, rounded up to 0.5 in.
   - Several items: the smallest (by volume) of three layouts, each confirmed by the packer: a
@@ -72,8 +73,21 @@ For an order type in a box:
   above 1 ft³ (USPS-style).
 - Billable weight = max(actual, DIM), rounded **up** to the next whole lb.
 - Shipping = rate table (illustrative: $8.50 at 1 lb + $0.95 per extra lb, extended past 70 lb).
-- Total = shipping + box unit cost. Also: empty space = 1 − item volume / interior volume,
-  cardboard = box weight, shipped volume = interior volume.
+- Void fill = usable volume (interior minus padding on every side) − item volume, priced at
+  $0.50 per ft³ by default (editable; an assumption to verify).
+- Total = shipping + box unit cost + void fill. This is what the optimizer minimizes.
+- Metrics: air shipped = interior volume − item volume (padding included); void fill volume;
+  empty space = 1 − item volume / interior volume; cardboard = box weight; shipped volume =
+  interior volume.
+
+### Why air volume is the headline, not empty space %
+
+- Padding counts as empty space: the clearance on every side holds no product, so even a perfect
+  fit is partly empty, and small products look very "empty" in any box.
+- Empty space % is relative: it does not say how much is shipped. Air shipped per year (ft³) is
+  absolute; it is what takes truck space, what DIM pricing charges for, and what void fill must
+  fill. The results therefore lead with air shipped and void fill needed, and show empty space %
+  as a secondary number.
 
 ## 6. Choosing K boxes (`engine/src/optimizer.rs`)
 

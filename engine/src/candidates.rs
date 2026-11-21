@@ -231,13 +231,39 @@ mod tests {
     use std::collections::HashSet;
 
     #[test]
-    fn catalog_loads_about_80_unique_positive_boxes() {
+    fn catalog_loads_150_to_200_unique_positive_boxes() {
         let boxes = stock_catalog();
-        assert!((75..=90).contains(&boxes.len()), "got {}", boxes.len());
+        assert!((150..=200).contains(&boxes.len()), "got {}", boxes.len());
         let ids: HashSet<_> = boxes.iter().map(|b| b.box_id.clone()).collect();
         assert_eq!(ids.len(), boxes.len(), "box ids must be unique");
+        let mut sizes = HashSet::new();
         for b in &boxes {
             assert!(b.length_in > 0.0 && b.width_in > 0.0 && b.height_in > 0.0);
+            let key = sorted_desc([b.length_in, b.width_in, b.height_in]).map(|v| v.to_bits());
+            assert!(sizes.insert(key), "duplicate size {}", b.box_id);
+        }
+    }
+
+    #[test]
+    fn catalog_has_one_inch_steps_for_small_boxes() {
+        let boxes = stock_catalog();
+        for (l, w, h) in [
+            (4.0, 4.0, 4.0),
+            (5.0, 5.0, 5.0),
+            (6.0, 4.0, 4.0),
+            (6.0, 6.0, 4.0),
+            (7.0, 5.0, 5.0),
+            (7.0, 7.0, 7.0),
+            (8.0, 6.0, 4.0),
+            (8.0, 6.0, 6.0),
+            (9.0, 9.0, 9.0),
+        ] {
+            assert!(
+                boxes
+                    .iter()
+                    .any(|b| b.length_in == l && b.width_in == w && b.height_in == h),
+                "missing {l}x{w}x{h}"
+            );
         }
     }
 

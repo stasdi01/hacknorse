@@ -1,503 +1,175 @@
 {
- "description": "Common stock corrugated box interior sizes (inches). Unit cost is estimated by the engine (see config.rs).",
+ "description": "Common standard corrugated box interior sizes (inches): cubes, small sizes in 1-inch steps, and larger standard sizes. Unit cost is estimated by the engine (see config.rs).",
  "boxes": [
-  {
-   "box_id": "S-4x4x4",
-   "length_in": 4,
-   "width_in": 4,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-6x6x6",
-   "length_in": 6,
-   "width_in": 6,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-8x8x8",
-   "length_in": 8,
-   "width_in": 8,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-10x10x10",
-   "length_in": 10,
-   "width_in": 10,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-12x12x12",
-   "length_in": 12,
-   "width_in": 12,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-14x14x14",
-   "length_in": 14,
-   "width_in": 14,
-   "height_in": 14
-  },
-  {
-   "box_id": "S-16x16x16",
-   "length_in": 16,
-   "width_in": 16,
-   "height_in": 16
-  },
-  {
-   "box_id": "S-18x18x18",
-   "length_in": 18,
-   "width_in": 18,
-   "height_in": 18
-  },
-  {
-   "box_id": "S-20x20x20",
-   "length_in": 20,
-   "width_in": 20,
-   "height_in": 20
-  },
-  {
-   "box_id": "S-22x22x22",
-   "length_in": 22,
-   "width_in": 22,
-   "height_in": 22
-  },
-  {
-   "box_id": "S-24x24x24",
-   "length_in": 24,
-   "width_in": 24,
-   "height_in": 24
-  },
-  {
-   "box_id": "S-6x4x4",
-   "length_in": 6,
-   "width_in": 4,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-6x6x4",
-   "length_in": 6,
-   "width_in": 6,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-7x5x5",
-   "length_in": 7,
-   "width_in": 5,
-   "height_in": 5
-  },
-  {
-   "box_id": "S-8x4x4",
-   "length_in": 8,
-   "width_in": 4,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-8x6x2",
-   "length_in": 8,
-   "width_in": 6,
-   "height_in": 2
-  },
-  {
-   "box_id": "S-8x6x4",
-   "length_in": 8,
-   "width_in": 6,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-8x6x6",
-   "length_in": 8,
-   "width_in": 6,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-8x8x4",
-   "length_in": 8,
-   "width_in": 8,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-8x8x6",
-   "length_in": 8,
-   "width_in": 8,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-9x6x3",
-   "length_in": 9,
-   "width_in": 6,
-   "height_in": 3
-  },
-  {
-   "box_id": "S-9x6x4",
-   "length_in": 9,
-   "width_in": 6,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-9x6x6",
-   "length_in": 9,
-   "width_in": 6,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-9x9x6",
-   "length_in": 9,
-   "width_in": 9,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-10x6x4",
-   "length_in": 10,
-   "width_in": 6,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-10x6x6",
-   "length_in": 10,
-   "width_in": 6,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-10x8x2",
-   "length_in": 10,
-   "width_in": 8,
-   "height_in": 2
-  },
-  {
-   "box_id": "S-10x8x4",
-   "length_in": 10,
-   "width_in": 8,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-10x8x6",
-   "length_in": 10,
-   "width_in": 8,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-10x10x4",
-   "length_in": 10,
-   "width_in": 10,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-10x10x6",
-   "length_in": 10,
-   "width_in": 10,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-10x10x8",
-   "length_in": 10,
-   "width_in": 10,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-11x8x4",
-   "length_in": 11,
-   "width_in": 8,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-11x8x6",
-   "length_in": 11,
-   "width_in": 8,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-12x6x6",
-   "length_in": 12,
-   "width_in": 6,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-12x9x3",
-   "length_in": 12,
-   "width_in": 9,
-   "height_in": 3
-  },
-  {
-   "box_id": "S-12x9x4",
-   "length_in": 12,
-   "width_in": 9,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-12x9x6",
-   "length_in": 12,
-   "width_in": 9,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-12x10x4",
-   "length_in": 12,
-   "width_in": 10,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-12x10x6",
-   "length_in": 12,
-   "width_in": 10,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-12x10x8",
-   "length_in": 12,
-   "width_in": 10,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-12x12x4",
-   "length_in": 12,
-   "width_in": 12,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-12x12x6",
-   "length_in": 12,
-   "width_in": 12,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-12x12x8",
-   "length_in": 12,
-   "width_in": 12,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-14x8x6",
-   "length_in": 14,
-   "width_in": 8,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-14x10x4",
-   "length_in": 14,
-   "width_in": 10,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-14x10x6",
-   "length_in": 14,
-   "width_in": 10,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-14x10x8",
-   "length_in": 14,
-   "width_in": 10,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-14x12x6",
-   "length_in": 14,
-   "width_in": 12,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-14x12x8",
-   "length_in": 14,
-   "width_in": 12,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-14x14x6",
-   "length_in": 14,
-   "width_in": 14,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-14x14x8",
-   "length_in": 14,
-   "width_in": 14,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-15x12x6",
-   "length_in": 15,
-   "width_in": 12,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-15x12x10",
-   "length_in": 15,
-   "width_in": 12,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-16x10x6",
-   "length_in": 16,
-   "width_in": 10,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-16x12x4",
-   "length_in": 16,
-   "width_in": 12,
-   "height_in": 4
-  },
-  {
-   "box_id": "S-16x12x6",
-   "length_in": 16,
-   "width_in": 12,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-16x12x8",
-   "length_in": 16,
-   "width_in": 12,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-16x12x10",
-   "length_in": 16,
-   "width_in": 12,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-16x12x12",
-   "length_in": 16,
-   "width_in": 12,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-16x14x8",
-   "length_in": 16,
-   "width_in": 14,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-16x16x6",
-   "length_in": 16,
-   "width_in": 16,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-16x16x8",
-   "length_in": 16,
-   "width_in": 16,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-16x16x12",
-   "length_in": 16,
-   "width_in": 16,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-18x12x6",
-   "length_in": 18,
-   "width_in": 12,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-18x12x8",
-   "length_in": 18,
-   "width_in": 12,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-18x12x12",
-   "length_in": 18,
-   "width_in": 12,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-18x14x8",
-   "length_in": 18,
-   "width_in": 14,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-18x14x10",
-   "length_in": 18,
-   "width_in": 14,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-18x16x10",
-   "length_in": 18,
-   "width_in": 16,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-18x18x12",
-   "length_in": 18,
-   "width_in": 18,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-20x12x8",
-   "length_in": 20,
-   "width_in": 12,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-20x14x6",
-   "length_in": 20,
-   "width_in": 14,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-20x14x10",
-   "length_in": 20,
-   "width_in": 14,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-20x16x8",
-   "length_in": 20,
-   "width_in": 16,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-20x16x12",
-   "length_in": 20,
-   "width_in": 16,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-20x20x10",
-   "length_in": 20,
-   "width_in": 20,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-22x14x10",
-   "length_in": 22,
-   "width_in": 14,
-   "height_in": 10
-  },
-  {
-   "box_id": "S-24x12x12",
-   "length_in": 24,
-   "width_in": 12,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-24x16x8",
-   "length_in": 24,
-   "width_in": 16,
-   "height_in": 8
-  },
-  {
-   "box_id": "S-24x16x12",
-   "length_in": 24,
-   "width_in": 16,
-   "height_in": 12
-  },
-  {
-   "box_id": "S-24x18x6",
-   "length_in": 24,
-   "width_in": 18,
-   "height_in": 6
-  },
-  {
-   "box_id": "S-24x18x12",
-   "length_in": 24,
-   "width_in": 18,
-   "height_in": 12
-  }
+  {"box_id": "S-4x4x4", "length_in": 4, "width_in": 4, "height_in": 4},
+  {"box_id": "S-5x5x5", "length_in": 5, "width_in": 5, "height_in": 5},
+  {"box_id": "S-6x6x6", "length_in": 6, "width_in": 6, "height_in": 6},
+  {"box_id": "S-7x7x7", "length_in": 7, "width_in": 7, "height_in": 7},
+  {"box_id": "S-8x8x8", "length_in": 8, "width_in": 8, "height_in": 8},
+  {"box_id": "S-9x9x9", "length_in": 9, "width_in": 9, "height_in": 9},
+  {"box_id": "S-10x10x10", "length_in": 10, "width_in": 10, "height_in": 10},
+  {"box_id": "S-11x11x11", "length_in": 11, "width_in": 11, "height_in": 11},
+  {"box_id": "S-12x12x12", "length_in": 12, "width_in": 12, "height_in": 12},
+  {"box_id": "S-14x14x14", "length_in": 14, "width_in": 14, "height_in": 14},
+  {"box_id": "S-15x15x15", "length_in": 15, "width_in": 15, "height_in": 15},
+  {"box_id": "S-16x16x16", "length_in": 16, "width_in": 16, "height_in": 16},
+  {"box_id": "S-18x18x18", "length_in": 18, "width_in": 18, "height_in": 18},
+  {"box_id": "S-20x20x20", "length_in": 20, "width_in": 20, "height_in": 20},
+  {"box_id": "S-22x22x22", "length_in": 22, "width_in": 22, "height_in": 22},
+  {"box_id": "S-24x24x24", "length_in": 24, "width_in": 24, "height_in": 24},
+  {"box_id": "S-5x4x3", "length_in": 5, "width_in": 4, "height_in": 3},
+  {"box_id": "S-5x5x3", "length_in": 5, "width_in": 5, "height_in": 3},
+  {"box_id": "S-5x5x4", "length_in": 5, "width_in": 5, "height_in": 4},
+  {"box_id": "S-6x4x2", "length_in": 6, "width_in": 4, "height_in": 2},
+  {"box_id": "S-6x4x3", "length_in": 6, "width_in": 4, "height_in": 3},
+  {"box_id": "S-6x4x4", "length_in": 6, "width_in": 4, "height_in": 4},
+  {"box_id": "S-6x5x4", "length_in": 6, "width_in": 5, "height_in": 4},
+  {"box_id": "S-6x6x3", "length_in": 6, "width_in": 6, "height_in": 3},
+  {"box_id": "S-6x6x4", "length_in": 6, "width_in": 6, "height_in": 4},
+  {"box_id": "S-6x6x5", "length_in": 6, "width_in": 6, "height_in": 5},
+  {"box_id": "S-7x4x4", "length_in": 7, "width_in": 4, "height_in": 4},
+  {"box_id": "S-7x5x3", "length_in": 7, "width_in": 5, "height_in": 3},
+  {"box_id": "S-7x5x4", "length_in": 7, "width_in": 5, "height_in": 4},
+  {"box_id": "S-7x5x5", "length_in": 7, "width_in": 5, "height_in": 5},
+  {"box_id": "S-7x6x4", "length_in": 7, "width_in": 6, "height_in": 4},
+  {"box_id": "S-7x6x5", "length_in": 7, "width_in": 6, "height_in": 5},
+  {"box_id": "S-7x7x4", "length_in": 7, "width_in": 7, "height_in": 4},
+  {"box_id": "S-7x7x5", "length_in": 7, "width_in": 7, "height_in": 5},
+  {"box_id": "S-7x7x6", "length_in": 7, "width_in": 7, "height_in": 6},
+  {"box_id": "S-8x4x2", "length_in": 8, "width_in": 4, "height_in": 2},
+  {"box_id": "S-8x4x4", "length_in": 8, "width_in": 4, "height_in": 4},
+  {"box_id": "S-8x5x3", "length_in": 8, "width_in": 5, "height_in": 3},
+  {"box_id": "S-8x5x4", "length_in": 8, "width_in": 5, "height_in": 4},
+  {"box_id": "S-8x5x5", "length_in": 8, "width_in": 5, "height_in": 5},
+  {"box_id": "S-8x6x2", "length_in": 8, "width_in": 6, "height_in": 2},
+  {"box_id": "S-8x6x3", "length_in": 8, "width_in": 6, "height_in": 3},
+  {"box_id": "S-8x6x4", "length_in": 8, "width_in": 6, "height_in": 4},
+  {"box_id": "S-8x6x5", "length_in": 8, "width_in": 6, "height_in": 5},
+  {"box_id": "S-8x6x6", "length_in": 8, "width_in": 6, "height_in": 6},
+  {"box_id": "S-8x8x3", "length_in": 8, "width_in": 8, "height_in": 3},
+  {"box_id": "S-8x8x4", "length_in": 8, "width_in": 8, "height_in": 4},
+  {"box_id": "S-8x8x5", "length_in": 8, "width_in": 8, "height_in": 5},
+  {"box_id": "S-8x8x6", "length_in": 8, "width_in": 8, "height_in": 6},
+  {"box_id": "S-8x8x7", "length_in": 8, "width_in": 8, "height_in": 7},
+  {"box_id": "S-9x5x5", "length_in": 9, "width_in": 5, "height_in": 5},
+  {"box_id": "S-9x6x3", "length_in": 9, "width_in": 6, "height_in": 3},
+  {"box_id": "S-9x6x4", "length_in": 9, "width_in": 6, "height_in": 4},
+  {"box_id": "S-9x6x5", "length_in": 9, "width_in": 6, "height_in": 5},
+  {"box_id": "S-9x6x6", "length_in": 9, "width_in": 6, "height_in": 6},
+  {"box_id": "S-9x7x4", "length_in": 9, "width_in": 7, "height_in": 4},
+  {"box_id": "S-9x7x5", "length_in": 9, "width_in": 7, "height_in": 5},
+  {"box_id": "S-9x7x6", "length_in": 9, "width_in": 7, "height_in": 6},
+  {"box_id": "S-9x8x6", "length_in": 9, "width_in": 8, "height_in": 6},
+  {"box_id": "S-9x9x4", "length_in": 9, "width_in": 9, "height_in": 4},
+  {"box_id": "S-9x9x5", "length_in": 9, "width_in": 9, "height_in": 5},
+  {"box_id": "S-9x9x6", "length_in": 9, "width_in": 9, "height_in": 6},
+  {"box_id": "S-9x9x8", "length_in": 9, "width_in": 9, "height_in": 8},
+  {"box_id": "S-10x5x5", "length_in": 10, "width_in": 5, "height_in": 5},
+  {"box_id": "S-10x6x4", "length_in": 10, "width_in": 6, "height_in": 4},
+  {"box_id": "S-10x6x6", "length_in": 10, "width_in": 6, "height_in": 6},
+  {"box_id": "S-10x7x5", "length_in": 10, "width_in": 7, "height_in": 5},
+  {"box_id": "S-10x7x6", "length_in": 10, "width_in": 7, "height_in": 6},
+  {"box_id": "S-10x8x2", "length_in": 10, "width_in": 8, "height_in": 2},
+  {"box_id": "S-10x8x4", "length_in": 10, "width_in": 8, "height_in": 4},
+  {"box_id": "S-10x8x5", "length_in": 10, "width_in": 8, "height_in": 5},
+  {"box_id": "S-10x8x6", "length_in": 10, "width_in": 8, "height_in": 6},
+  {"box_id": "S-10x8x8", "length_in": 10, "width_in": 8, "height_in": 8},
+  {"box_id": "S-10x10x4", "length_in": 10, "width_in": 10, "height_in": 4},
+  {"box_id": "S-10x10x5", "length_in": 10, "width_in": 10, "height_in": 5},
+  {"box_id": "S-10x10x6", "length_in": 10, "width_in": 10, "height_in": 6},
+  {"box_id": "S-10x10x8", "length_in": 10, "width_in": 10, "height_in": 8},
+  {"box_id": "S-11x6x4", "length_in": 11, "width_in": 6, "height_in": 4},
+  {"box_id": "S-11x8x4", "length_in": 11, "width_in": 8, "height_in": 4},
+  {"box_id": "S-11x8x5", "length_in": 11, "width_in": 8, "height_in": 5},
+  {"box_id": "S-11x8x6", "length_in": 11, "width_in": 8, "height_in": 6},
+  {"box_id": "S-11x9x5", "length_in": 11, "width_in": 9, "height_in": 5},
+  {"box_id": "S-11x9x6", "length_in": 11, "width_in": 9, "height_in": 6},
+  {"box_id": "S-11x11x6", "length_in": 11, "width_in": 11, "height_in": 6},
+  {"box_id": "S-11x11x8", "length_in": 11, "width_in": 11, "height_in": 8},
+  {"box_id": "S-12x6x4", "length_in": 12, "width_in": 6, "height_in": 4},
+  {"box_id": "S-12x6x6", "length_in": 12, "width_in": 6, "height_in": 6},
+  {"box_id": "S-12x8x4", "length_in": 12, "width_in": 8, "height_in": 4},
+  {"box_id": "S-12x8x6", "length_in": 12, "width_in": 8, "height_in": 6},
+  {"box_id": "S-12x8x8", "length_in": 12, "width_in": 8, "height_in": 8},
+  {"box_id": "S-12x9x3", "length_in": 12, "width_in": 9, "height_in": 3},
+  {"box_id": "S-12x9x4", "length_in": 12, "width_in": 9, "height_in": 4},
+  {"box_id": "S-12x9x6", "length_in": 12, "width_in": 9, "height_in": 6},
+  {"box_id": "S-12x9x8", "length_in": 12, "width_in": 9, "height_in": 8},
+  {"box_id": "S-12x10x4", "length_in": 12, "width_in": 10, "height_in": 4},
+  {"box_id": "S-12x10x6", "length_in": 12, "width_in": 10, "height_in": 6},
+  {"box_id": "S-12x10x8", "length_in": 12, "width_in": 10, "height_in": 8},
+  {"box_id": "S-12x10x10", "length_in": 12, "width_in": 10, "height_in": 10},
+  {"box_id": "S-12x12x4", "length_in": 12, "width_in": 12, "height_in": 4},
+  {"box_id": "S-12x12x6", "length_in": 12, "width_in": 12, "height_in": 6},
+  {"box_id": "S-12x12x8", "length_in": 12, "width_in": 12, "height_in": 8},
+  {"box_id": "S-12x12x10", "length_in": 12, "width_in": 12, "height_in": 10},
+  {"box_id": "S-13x10x6", "length_in": 13, "width_in": 10, "height_in": 6},
+  {"box_id": "S-14x8x6", "length_in": 14, "width_in": 8, "height_in": 6},
+  {"box_id": "S-14x10x4", "length_in": 14, "width_in": 10, "height_in": 4},
+  {"box_id": "S-14x10x6", "length_in": 14, "width_in": 10, "height_in": 6},
+  {"box_id": "S-14x10x8", "length_in": 14, "width_in": 10, "height_in": 8},
+  {"box_id": "S-14x12x6", "length_in": 14, "width_in": 12, "height_in": 6},
+  {"box_id": "S-14x12x8", "length_in": 14, "width_in": 12, "height_in": 8},
+  {"box_id": "S-14x12x10", "length_in": 14, "width_in": 12, "height_in": 10},
+  {"box_id": "S-14x14x6", "length_in": 14, "width_in": 14, "height_in": 6},
+  {"box_id": "S-14x14x8", "length_in": 14, "width_in": 14, "height_in": 8},
+  {"box_id": "S-14x14x10", "length_in": 14, "width_in": 14, "height_in": 10},
+  {"box_id": "S-15x10x6", "length_in": 15, "width_in": 10, "height_in": 6},
+  {"box_id": "S-15x12x6", "length_in": 15, "width_in": 12, "height_in": 6},
+  {"box_id": "S-15x12x8", "length_in": 15, "width_in": 12, "height_in": 8},
+  {"box_id": "S-15x12x10", "length_in": 15, "width_in": 12, "height_in": 10},
+  {"box_id": "S-16x8x8", "length_in": 16, "width_in": 8, "height_in": 8},
+  {"box_id": "S-16x10x6", "length_in": 16, "width_in": 10, "height_in": 6},
+  {"box_id": "S-16x10x8", "length_in": 16, "width_in": 10, "height_in": 8},
+  {"box_id": "S-16x12x4", "length_in": 16, "width_in": 12, "height_in": 4},
+  {"box_id": "S-16x12x6", "length_in": 16, "width_in": 12, "height_in": 6},
+  {"box_id": "S-16x12x8", "length_in": 16, "width_in": 12, "height_in": 8},
+  {"box_id": "S-16x12x10", "length_in": 16, "width_in": 12, "height_in": 10},
+  {"box_id": "S-16x12x12", "length_in": 16, "width_in": 12, "height_in": 12},
+  {"box_id": "S-16x14x8", "length_in": 16, "width_in": 14, "height_in": 8},
+  {"box_id": "S-16x14x10", "length_in": 16, "width_in": 14, "height_in": 10},
+  {"box_id": "S-16x16x6", "length_in": 16, "width_in": 16, "height_in": 6},
+  {"box_id": "S-16x16x8", "length_in": 16, "width_in": 16, "height_in": 8},
+  {"box_id": "S-16x16x10", "length_in": 16, "width_in": 16, "height_in": 10},
+  {"box_id": "S-16x16x12", "length_in": 16, "width_in": 16, "height_in": 12},
+  {"box_id": "S-18x10x6", "length_in": 18, "width_in": 10, "height_in": 6},
+  {"box_id": "S-18x12x6", "length_in": 18, "width_in": 12, "height_in": 6},
+  {"box_id": "S-18x12x8", "length_in": 18, "width_in": 12, "height_in": 8},
+  {"box_id": "S-18x12x10", "length_in": 18, "width_in": 12, "height_in": 10},
+  {"box_id": "S-18x12x12", "length_in": 18, "width_in": 12, "height_in": 12},
+  {"box_id": "S-18x14x8", "length_in": 18, "width_in": 14, "height_in": 8},
+  {"box_id": "S-18x14x10", "length_in": 18, "width_in": 14, "height_in": 10},
+  {"box_id": "S-18x14x12", "length_in": 18, "width_in": 14, "height_in": 12},
+  {"box_id": "S-18x16x10", "length_in": 18, "width_in": 16, "height_in": 10},
+  {"box_id": "S-18x16x12", "length_in": 18, "width_in": 16, "height_in": 12},
+  {"box_id": "S-18x18x6", "length_in": 18, "width_in": 18, "height_in": 6},
+  {"box_id": "S-18x18x8", "length_in": 18, "width_in": 18, "height_in": 8},
+  {"box_id": "S-18x18x10", "length_in": 18, "width_in": 18, "height_in": 10},
+  {"box_id": "S-18x18x12", "length_in": 18, "width_in": 18, "height_in": 12},
+  {"box_id": "S-20x10x10", "length_in": 20, "width_in": 10, "height_in": 10},
+  {"box_id": "S-20x12x8", "length_in": 20, "width_in": 12, "height_in": 8},
+  {"box_id": "S-20x12x12", "length_in": 20, "width_in": 12, "height_in": 12},
+  {"box_id": "S-20x14x6", "length_in": 20, "width_in": 14, "height_in": 6},
+  {"box_id": "S-20x14x10", "length_in": 20, "width_in": 14, "height_in": 10},
+  {"box_id": "S-20x14x12", "length_in": 20, "width_in": 14, "height_in": 12},
+  {"box_id": "S-20x16x8", "length_in": 20, "width_in": 16, "height_in": 8},
+  {"box_id": "S-20x16x10", "length_in": 20, "width_in": 16, "height_in": 10},
+  {"box_id": "S-20x16x12", "length_in": 20, "width_in": 16, "height_in": 12},
+  {"box_id": "S-20x20x6", "length_in": 20, "width_in": 20, "height_in": 6},
+  {"box_id": "S-20x20x10", "length_in": 20, "width_in": 20, "height_in": 10},
+  {"box_id": "S-20x20x12", "length_in": 20, "width_in": 20, "height_in": 12},
+  {"box_id": "S-20x20x15", "length_in": 20, "width_in": 20, "height_in": 15},
+  {"box_id": "S-22x14x10", "length_in": 22, "width_in": 14, "height_in": 10},
+  {"box_id": "S-22x16x12", "length_in": 22, "width_in": 16, "height_in": 12},
+  {"box_id": "S-22x18x12", "length_in": 22, "width_in": 18, "height_in": 12},
+  {"box_id": "S-24x12x12", "length_in": 24, "width_in": 12, "height_in": 12},
+  {"box_id": "S-24x14x10", "length_in": 24, "width_in": 14, "height_in": 10},
+  {"box_id": "S-24x16x8", "length_in": 24, "width_in": 16, "height_in": 8},
+  {"box_id": "S-24x16x12", "length_in": 24, "width_in": 16, "height_in": 12},
+  {"box_id": "S-24x18x6", "length_in": 24, "width_in": 18, "height_in": 6},
+  {"box_id": "S-24x18x12", "length_in": 24, "width_in": 18, "height_in": 12},
+  {"box_id": "S-24x18x18", "length_in": 24, "width_in": 18, "height_in": 18},
+  {"box_id": "S-24x20x12", "length_in": 24, "width_in": 20, "height_in": 12},
+  {"box_id": "S-24x24x12", "length_in": 24, "width_in": 24, "height_in": 12}
  ]
 }

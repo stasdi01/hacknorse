@@ -1,8 +1,8 @@
 //! Cost model: box weight, DIM weight, billable weight, shipping and box cost.
 
 use crate::config::*;
-use crate::packer::Dims;
-use crate::types::{BoxMetrics, CarrierPreset, RateTable};
+use crate::packer::{usable_dims, Dims};
+use crate::types::{BoxMetrics, CarrierPreset, RateTable, Settings};
 
 /// Box surface area (in²) from interior dims.
 pub fn surface_area_in2(d: Dims) -> f64 {
@@ -57,6 +57,33 @@ pub fn shipping_usd(billable: f64, table: &RateTable) -> f64 {
     table.base_usd + table.per_lb_usd * (billable.max(1.0) - 1.0)
 }
 
+/// Void-fill volume (in³) of an order in a box: usable volume (interior
+/// minus padding on every side) minus item volume, never negative.
+pub fn void_fill_in3(item_volume_in3: f64, d: Dims, padding: f64) -> f64 {
+    let usable = volume_in3(usable_dims(d, padding).map(|v| v.max(0.0)));
+    (usable - item_volume_in3).max(0.0)
+}
+
+/// Settings that the cost of an order depends on.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct CostParams {
+    pub carrier: CarrierPreset,
+    pub rate_table: RateTable,
+    pub padding_in: f64,
+    pub void_fill_usd_per_ft3: f64,
+}
+
+impl CostParams {
+    pub fn from_settings(s: &Settings) -> Self {
+        Self {
+            carrier: s.carrier,
+            rate_table: s.rate_table,
+            padding_in: s.padding_in,
+            void_fill_usd_per_ft3: s.void_fill_usd_per_ft3,
+        }
+    }
+}
+
 /// Cost and metrics of shipping one order (items of `item_volume_in3`,
 /// `item_weight_lb`) in a box with interior `d` and unit cost `unit_cost`.
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -64,10 +91,16 @@ pub struct CostEval {
     pub billable_lb: f64,
     pub shipping_usd: f64,
     pub box_usd: f64,
+    pub void_fill_usd: f64,
+    /// Shipping + box + void fill: the cost the optimizer minimizes.
     pub total_usd: f64,
     pub empty_space_pct: f64,
     pub cardboard_lb: f64,
     pub shipped_ft3: f64,
+    /// Interior volume not occupied by items (padding included).
+    pub air_ft3: f64,
+    /// Usable volume not occupied by items (to be filled with void fill).
+    pub void_fill_ft3: f64,
     pub interior_in3: f64,
 }
 
@@ -77,27 +110,31 @@ pub fn evaluate(
     item_weight_lb: f64,
     d: Dims,
     unit_cost: f64,
-    carrier: CarrierPreset,
-    table: &RateTable,
+    p: &CostParams,
 ) -> CostEval {
     let cardboard = box_weight_lb(d);
     let actual = item_weight_lb + cardboard;
-    let billable = billable_lb(actual, dim_weight_lb(d, carrier));
-    let shipping = shipping_usd(billable, table);
+    let billable = billable_lb(actual, dim_weight_lb(d, p.carrier));
+    let shipping = shipping_usd(billable, &p.rate_table);
     let interior = volume_in3(d);
     let empty = if interior > 0.0 {
         (1.0 - item_volume_in3 / interior) * 100.0
     } else {
         0.0
     };
+    let void_ft3 = void_fill_in3(item_volume_in3, d, p.padding_in) / 1728.0;
+    let void_usd = void_ft3 * p.void_fill_usd_per_ft3;
     CostEval {
         billable_lb: billable,
         shipping_usd: shipping,
         box_usd: unit_cost,
-        total_usd: shipping + unit_cost,
+        void_fill_usd: void_usd,
+        total_usd: shipping + unit_cost + void_usd,
         empty_space_pct: empty,
         cardboard_lb: cardboard,
         shipped_ft3: interior / 1728.0,
+        air_ft3: (interior - item_volume_in3).max(0.0) / 1728.0,
+        void_fill_ft3: void_ft3,
         interior_in3: interior,
     }
 }
@@ -110,10 +147,13 @@ impl CostEval {
             billable_lb: self.billable_lb,
             shipping_usd: self.shipping_usd,
             box_usd: self.box_usd,
+            void_fill_usd: self.void_fill_usd,
             total_usd: self.total_usd,
             empty_space_pct: self.empty_space_pct,
             cardboard_lb: self.cardboard_lb,
             shipped_ft3: self.shipped_ft3,
+            air_ft3: self.air_ft3,
+            void_fill_ft3: self.void_fill_ft3,
         }
     }
 }
@@ -188,11 +228,36 @@ mod tests {
     #[test]
     fn evaluate_combines_everything() {
         let d = [10.0, 8.0, 6.0]; // 480 in³ → DIM 3.45 lb
-        let e = evaluate(240.0, 1.0, d, 1.10, CarrierPreset::UpsFedex, &table());
+        let p = CostParams {
+            carrier: CarrierPreset::UpsFedex,
+            rate_table: table(),
+            padding_in: 0.5,
+            void_fill_usd_per_ft3: 1.728,
+        };
+        let e = evaluate(240.0, 1.0, d, 1.10, &p);
         assert_eq!(e.billable_lb, 4.0);
         assert!(close(e.shipping_usd, 8.5 + 3.0 * 0.95));
-        assert!(close(e.total_usd, e.shipping_usd + 1.10));
+        // Usable 9×7×5 = 315 in³, items 240 in³ → 75 in³ of void fill.
+        assert!(close(e.void_fill_ft3, 75.0 / 1728.0));
+        assert!(close(e.void_fill_usd, 75.0 / 1000.0));
+        assert!(close(e.total_usd, e.shipping_usd + 1.10 + 0.075));
         assert!(close(e.empty_space_pct, 50.0));
         assert!(close(e.shipped_ft3, 480.0 / 1728.0));
+        // Air counts all non-item interior space, padding included.
+        assert!(close(e.air_ft3, 240.0 / 1728.0));
+    }
+
+    #[test]
+    fn void_fill_is_never_negative_and_zero_cost_is_allowed() {
+        assert_eq!(void_fill_in3(1000.0, [10.0, 8.0, 6.0], 0.5), 0.0);
+        assert_eq!(void_fill_in3(1.0, [1.0, 1.0, 1.0], 1.0), 0.0);
+        let p = CostParams {
+            carrier: CarrierPreset::Usps,
+            rate_table: table(),
+            padding_in: 0.5,
+            void_fill_usd_per_ft3: 0.0,
+        };
+        let e = evaluate(10.0, 0.5, [6.0, 6.0, 6.0], 0.5, &p);
+        assert!(close(e.total_usd, e.shipping_usd + 0.5));
     }
 }

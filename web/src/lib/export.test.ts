@@ -19,10 +19,13 @@ const metrics = (id: string, empty: number) => ({
   billable_lb: 2,
   shipping_usd: 9.45,
   box_usd: 0.76,
-  total_usd: 10.21,
+  void_fill_usd: 0.05,
+  total_usd: 10.26,
   empty_space_pct: empty,
   cardboard_lb: 0.34,
   shipped_ft3: 0.28,
+  air_ft3: 0.2,
+  void_fill_ft3: 0.1,
 });
 
 const assignments: Assignment[] = [

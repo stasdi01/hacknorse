@@ -68,7 +68,7 @@ export function BeforeAfterChart({ report, units }: { report: Report; units: Uni
   const s = report.summary;
   const panels: Panel[] = [
     {
-      title: "Shipping + boxes ($/yr)",
+      title: "Shipping, boxes & fill ($/yr)",
       before: s.baseline.total_usd,
       after: s.optimized.total_usd,
       fmt: (v) => `$${compact(v)}`,

@@ -83,6 +83,13 @@ pub struct Settings {
     /// Also allow the seller's current boxes as candidates.
     #[serde(default)]
     pub allow_current_boxes: bool,
+    /// Void-fill material cost per ft³ of void volume.
+    #[serde(default = "default_void_fill_usd_per_ft3")]
+    pub void_fill_usd_per_ft3: f64,
+}
+
+fn default_void_fill_usd_per_ft3() -> f64 {
+    crate::config::VOID_FILL_USD_PER_FT3
 }
 
 /// Input to `optimize` and `validate`.
@@ -154,11 +161,17 @@ pub struct Totals {
     pub orders: f64,
     pub shipping_usd: f64,
     pub box_usd: f64,
+    pub void_fill_usd: f64,
+    /// Shipping + boxes + void fill.
     pub total_usd: f64,
     /// 1 − Σ item volume / Σ interior volume.
     pub empty_space_pct: f64,
     pub cardboard_lb: f64,
     pub shipped_ft3: f64,
+    /// Interior volume not occupied by items (padding included).
+    pub air_ft3: f64,
+    /// Usable volume (inside the padding) not occupied by items.
+    pub void_fill_ft3: f64,
 }
 
 /// Baseline vs. optimized summary.
@@ -172,6 +185,8 @@ pub struct Summary {
     pub savings_pct: f64,
     pub cardboard_saved_lb: f64,
     pub shipped_ft3_saved: f64,
+    pub air_ft3_saved: f64,
+    pub void_fill_ft3_saved: f64,
     /// Orders (per year) served by each scenario, and flagged.
     pub baseline_orders_served: f64,
     pub baseline_orders_flagged: f64,
@@ -214,10 +229,13 @@ pub struct BoxMetrics {
     pub billable_lb: f64,
     pub shipping_usd: f64,
     pub box_usd: f64,
+    pub void_fill_usd: f64,
     pub total_usd: f64,
     pub empty_space_pct: f64,
     pub cardboard_lb: f64,
     pub shipped_ft3: f64,
+    pub air_ft3: f64,
+    pub void_fill_ft3: f64,
 }
 
 /// A signature with its baseline and optimized box.

@@ -31,6 +31,7 @@ pub fn default_settings(mode: Mode) -> Settings {
             max_lb: RATE_MAX_LB,
         },
         allow_current_boxes: false,
+        void_fill_usd_per_ft3: VOID_FILL_USD_PER_FT3,
     }
 }
 

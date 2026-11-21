@@ -283,6 +283,7 @@ mod tests {
                     max_lb: 70.0,
                 },
                 allow_current_boxes: false,
+                void_fill_usd_per_ft3: 0.5,
             },
         }
     }

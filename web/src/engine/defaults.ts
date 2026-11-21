@@ -32,6 +32,9 @@ export const BOARD_WEIGHT_LB_PER_FT2 = 0.13; // ASSUMPTION: verify before presen
 /** Stock box unit cost estimate: base + per in² of surface area (USD). */
 export const STOCK_COST_BASE_USD = 0.2; // ASSUMPTION: verify before presenting
 export const STOCK_COST_PER_IN2_USD = 0.0015; // ASSUMPTION: verify before presenting
+/** Void-fill material cost (air pillows / paper) per ft³ of void volume. */
+export const VOID_FILL_USD_PER_FT3 = 0.5; // ASSUMPTION: verify before presenting
+
 /** Custom box unit cost = stock formula × this factor. */
 export const CUSTOM_COST_MULTIPLIER = 1.25; // ASSUMPTION: verify before presenting
 
@@ -59,6 +62,7 @@ export const DEFAULT_SETTINGS: Settings = {
     max_lb: RATE_MAX_LB,
   },
   allow_current_boxes: false,
+  void_fill_usd_per_ft3: VOID_FILL_USD_PER_FT3,
 };
 
 /** Stock box unit cost estimate (USD) from interior dims (inches). */

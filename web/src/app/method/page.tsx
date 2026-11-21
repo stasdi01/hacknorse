@@ -11,7 +11,10 @@ export const metadata: Metadata = { title: "Method" };
 const PIPELINE = [
   { title: "Your CSVs", text: "Products, orders, current boxes" },
   { title: "Clean & group", text: "Identical orders become one order type with a count" },
-  { title: "Candidate boxes", text: "~80 stock sizes, or a tight custom size per order type" },
+  {
+    title: "Candidate boxes",
+    text: "170 standard stock sizes, or a tight custom size per order type",
+  },
   { title: "Fit check", text: "3D packer: does this order fit this box?" },
   { title: "Cost", text: "DIM weight, billable weight, rate, box price" },
   { title: "Choose K boxes", text: "Greedy + swap search over all candidates" },
@@ -48,6 +51,11 @@ const ASSUMPTIONS: { name: string; value: string; status: string }[] = [
     name: "Stock box price",
     value: `$${D.STOCK_COST_BASE_USD.toFixed(2)} + $${D.STOCK_COST_PER_IN2_USD} × surface area (in²)`,
     status: "Estimate: compare with a price list",
+  },
+  {
+    name: "Void fill cost",
+    value: `$${D.VOID_FILL_USD_PER_FT3.toFixed(2)} per ft³ of void (usable volume − item volume); editable`,
+    status: "Assumption: verify with your fill supplier",
   },
   {
     name: "Custom box price",
@@ -128,9 +136,11 @@ export default function MethodPage() {
         <ul className="list-disc space-y-2 pl-6">
           <li>
             <strong>Cost of an order in a box</strong> = shipping price for its billable weight +
-            the box price. Billable weight is the larger of the real weight (items + cardboard) and
-            the DIM weight (box volume ÷ divisor), rounded up to a whole pound. Big boxes cost more
-            even when they are light.
+            the box price + void fill. Billable weight is the larger of the real weight (items +
+            cardboard) and the DIM weight (box volume ÷ divisor), rounded up to a whole pound. Big
+            boxes cost more even when they are light. Void fill is the material (air pillows, paper)
+            needed for the space inside the padding that the products leave empty, priced at $
+            {D.VOID_FILL_USD_PER_FT3.toFixed(2)} per ft³ by default.
           </li>
           <li>
             <strong>Greedy start:</strong> add the box that lowers the total cost the most, K times.
@@ -148,6 +158,32 @@ export default function MethodPage() {
           <li>
             The <strong>baseline</strong> puts each order in the cheapest of your current boxes,
             which is what box-picker apps do. So the savings come on top of them.
+          </li>
+        </ul>
+      </Section>
+
+      <Section id="air" title="Why we measure air, not only empty space %">
+        <ul className="list-disc space-y-2 pl-6">
+          <li>
+            <strong>Padding counts as empty space.</strong> Every box keeps {D.DEFAULT_PADDING_IN}{" "}
+            in of clearance on each side for protection. That space holds no product, so it is part
+            of the empty space, even for a perfect fit. A small candle in a snug box can still be
+            more than half empty.
+          </li>
+          <li>
+            <strong>Empty space % is relative.</strong> It is the same for a tiny box and a huge box
+            with the same proportions, and it says nothing about how much is shipped. Small products
+            make it look high even when there is little to gain.
+          </li>
+          <li>
+            <strong>Air volume is absolute.</strong> Air shipped per year (box volume minus product
+            volume, in ft³) is what fills trucks, what DIM pricing charges for, and what you buy
+            void fill for. That is why the results lead with air shipped and void fill needed, and
+            show empty space % as a secondary number.
+          </li>
+          <li>
+            <strong>Void fill</strong> counts only the space inside the padding (usable volume minus
+            product volume): the padding itself is the protective clearance.
           </li>
         </ul>
       </Section>
