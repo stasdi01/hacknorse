@@ -3,10 +3,15 @@
 //! The public API (also exported to WebAssembly) is JSON in, JSON out:
 //! `optimize`, `validate` and [`version`].
 
+pub mod baseline;
 pub mod candidates;
+pub mod clock;
 pub mod config;
 pub mod cost;
+pub mod optimizer;
 pub mod packer;
+pub mod pipeline;
+pub mod prep;
 pub mod types;
 
 use wasm_bindgen::prelude::*;

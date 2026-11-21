@@ -187,6 +187,8 @@ pub struct CurvePoint {
     /// (excludes orders that fit no candidate).
     pub total_usd: f64,
     pub empty_space_pct: f64,
+    /// Orders per year that no selected box fits (but some candidate does).
+    pub orders_unserved: f64,
     pub box_ids: Vec<String>,
 }
 

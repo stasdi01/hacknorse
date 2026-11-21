@@ -1,5 +1,8 @@
 //! Candidate box generation (stock catalog and custom sizes).
 
+use crate::cost::stock_unit_cost;
+use crate::packer::Dims;
+use crate::types::{BoxSource, BoxSpec};
 use serde::Deserialize;
 
 /// The stock catalog, embedded at compile time.
@@ -26,6 +29,52 @@ pub fn stock_catalog() -> Vec<StockBox> {
     serde_json::from_str::<Catalog>(STOCK_BOXES_JSON)
         .map(|c| c.boxes)
         .unwrap_or_default()
+}
+
+/// A box the optimizer may select (or a current box for the baseline).
+#[derive(Debug, Clone, PartialEq)]
+pub struct CandidateBox {
+    pub box_id: String,
+    pub dims: Dims,
+    pub unit_cost: f64,
+    pub source: BoxSource,
+}
+
+impl CandidateBox {
+    /// A seller's current box.
+    pub fn from_current(b: &BoxSpec) -> Self {
+        Self {
+            box_id: b.box_id.clone(),
+            dims: [b.length_in, b.width_in, b.height_in],
+            unit_cost: b.unit_cost_usd,
+            source: BoxSource::Current,
+        }
+    }
+}
+
+/// Stock-mode candidates: the catalog with estimated unit costs.
+pub fn stock_candidates() -> Vec<CandidateBox> {
+    stock_catalog()
+        .into_iter()
+        .map(|b| {
+            let dims = [b.length_in, b.width_in, b.height_in];
+            CandidateBox {
+                box_id: b.box_id,
+                dims,
+                unit_cost: stock_unit_cost(dims),
+                source: BoxSource::Stock,
+            }
+        })
+        .collect()
+}
+
+/// Custom-mode candidates (implemented in milestone M11; until then the
+/// stock catalog is used).
+pub fn custom_candidates(
+    _signatures: &[crate::prep::Signature],
+    _padding: f64,
+) -> Vec<CandidateBox> {
+    stock_candidates()
 }
 
 #[cfg(test)]

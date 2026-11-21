@@ -148,6 +148,8 @@ export interface CurvePoint {
   /** Annualized total $ over all orders served by the selection. */
   total_usd: number;
   empty_space_pct: number;
+  /** Orders per year that no selected box fits (but some candidate does). */
+  orders_unserved: number;
   box_ids: string[];
 }
 
