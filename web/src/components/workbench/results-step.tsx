@@ -12,6 +12,7 @@ import { KCurve } from "@/components/results/k-curve";
 import { KpiCards } from "@/components/results/kpi-cards";
 import { productNames } from "@/components/results/labels";
 import { OrdersTable } from "@/components/results/orders-table";
+import { Viewer3D } from "@/components/results/viewer-3d";
 import { SAMPLE_STORE_NAME } from "@/lib/data/sample";
 import { num } from "@/lib/format";
 import { KSlider, UnitsToggle } from "./settings-step";
@@ -21,6 +22,7 @@ export function ResultsStep() {
   const wb = useWorkbench();
   const r = wb.report;
   const [k, setK] = useState(wb.settings.k);
+  const [viewed, setViewed] = useState(0);
   const names = useMemo(() => productNames(wb.dataset.input?.products), [wb.dataset.input]);
   const viewable = useMemo(() => new Set((r?.placements ?? []).map((p) => p.signature_id)), [r]);
   if (!r) return null;
@@ -79,10 +81,24 @@ export function ResultsStep() {
         custom={r.settings.mode === "custom"}
       />
       <CurrentBoxes boxes={r.current} units={wb.units} />
+      <Viewer3D
+        placements={r.placements}
+        assignments={r.assignments}
+        names={names}
+        units={wb.units}
+        selected={viewed}
+        onSelect={setViewed}
+      />
       <OrdersTable
         assignments={r.assignments}
         names={names}
         viewable={viewable}
+        onView={(id) => {
+          setViewed(id);
+          document
+            .getElementById("viewer-3d")
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }}
         factor={r.annualization.factor}
       />
       <FlaggedPanel flagged={r.flagged} names={names} />

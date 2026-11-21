@@ -13,6 +13,7 @@ test("results dashboard shows every section for the sample store", async ({ page
     "recommended-boxes",
     "orders-table",
     "flagged-panel",
+    "viewer-3d",
   ]) {
     await expect(page.getByTestId(id)).toBeVisible();
   }
@@ -30,4 +31,22 @@ test("results dashboard shows every section for the sample store", async ({ page
   await expect(page.getByTestId("recommended-table").locator("tbody tr")).toHaveCount(5, {
     timeout: 30_000,
   });
+});
+
+test("3D viewer shows the current and recommended box for a chosen order", async ({ page }) => {
+  await page.goto("/app?sample=1");
+  await expect(page.getByTestId("results")).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByTestId("viewer-before").locator("canvas")).toBeVisible({
+    timeout: 20_000,
+  });
+  await expect(page.getByTestId("viewer-after").locator("canvas")).toBeVisible();
+
+  await page.getByTestId("viewer-select").click();
+  await page.getByRole("option", { name: /2 × Moss Mug 12oz/ }).click();
+  await expect(page.getByTestId("viewer-after")).toContainText("empty");
+  await expect(page.getByTestId("viewer-3d")).toContainText("2 × Moss Mug 12oz");
+
+  // The eye button in the orders table selects an order for the viewer.
+  await page.getByRole("button", { name: "View in 3D" }).nth(1).click();
+  await expect(page.getByTestId("viewer-select")).toContainText("#2 ·");
 });
