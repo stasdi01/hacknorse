@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { BeforeAfterChart } from "@/components/results/before-after-chart";
 import { CurrentBoxes, RecommendedBoxes } from "@/components/results/box-tables";
+import { ExportBar } from "@/components/results/export-bar";
+import { PrintReport } from "@/components/results/print-report";
 import { FlaggedPanel } from "@/components/results/flagged-panel";
 import { KCurve } from "@/components/results/k-curve";
 import { KpiCards } from "@/components/results/kpi-cards";
@@ -102,11 +104,27 @@ export function ResultsStep() {
         factor={r.annualization.factor}
       />
       <FlaggedPanel flagged={r.flagged} names={names} />
+      <ExportBar report={r} names={names} onReport={() => wb.setStep("report")} />
       <p className="text-xs text-muted-foreground">
         Computed in your browser in {Math.round(r.timings_ms.total_ms)} ms (engine{" "}
         {r.engine_version}). Shipping rates are illustrative; replace them with your own in
         Settings.
       </p>
     </div>
+  );
+}
+
+export function ReportStep() {
+  const wb = useWorkbench();
+  const names = useMemo(() => productNames(wb.dataset.input?.products), [wb.dataset.input]);
+  if (!wb.report) return null;
+  return (
+    <PrintReport
+      report={wb.report}
+      names={names}
+      units={wb.units}
+      storeLabel={wb.isSample ? SAMPLE_STORE_NAME : null}
+      onBack={() => wb.setStep("results")}
+    />
   );
 }

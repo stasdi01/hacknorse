@@ -11,7 +11,7 @@
 | M6  | Data step: upload, mapping, validation, templates   | done    | Upload (drag/drop), templates, sample loader, synonym mapping UI with unit selects, validation report; e2e with renamed Shopify-style columns. |
 | M7  | Results dashboard                                   | done    | Settings step (mode, K, padding, carrier, rate table, units) + KPI cards, before/after bars, clickable K-curve, box tables, paginated orders table, flagged panel. |
 | M8  | 3D viewer                                           | done    | react-three-fiber side-by-side viewer (wireframe box, items colored by SKU, orbit controls) for any top-50 order; selectable from dropdown or orders table. |
-| M9  | Export                                              | pending |      |
+| M9  | Export                                              | done    | Buying list CSV (yearly quantity per box), packing guide CSV (every order type → box), print-friendly report view for Save as PDF. |
 | M10 | Landing page + design polish + units toggle         | pending |      |
 | M11 | Custom mode                                         | pending |      |
 | M12 | Validation + /method page                           | pending |      |

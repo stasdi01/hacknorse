@@ -14,7 +14,7 @@ import type { ColumnMapping, FileKind } from "@/lib/data/mapping";
 import { fetchSampleTexts, sampleFiles } from "@/lib/data/sample";
 import type { LengthUnit, UnitSystem, WeightUnit } from "@/lib/data/units";
 
-export type Step = "data" | "map" | "settings" | "results";
+export type Step = "data" | "map" | "settings" | "results" | "report";
 
 export interface UploadedFile {
   name: string;

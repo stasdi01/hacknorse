@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { DataStep } from "./data-step";
 import { MappingStep } from "./mapping-step";
-import { ResultsStep } from "./results-step";
+import { ReportStep, ResultsStep } from "./results-step";
 import { SettingsStep } from "./settings-step";
 import { useWorkbench, WorkbenchProvider, type Step } from "./state";
 
@@ -67,6 +67,7 @@ function AutoSample() {
 
 function Body() {
   const wb = useWorkbench();
+  if (wb.step === "report" && wb.report) return <ReportStep />;
   return (
     <div className="space-y-6">
       <Stepper />
