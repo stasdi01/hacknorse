@@ -5,6 +5,7 @@
 
 pub mod candidates;
 pub mod config;
+pub mod cost;
 pub mod packer;
 pub mod types;
 
