@@ -14,7 +14,7 @@
 | M9  | Export                                              | done    | Buying list CSV (yearly quantity per box), packing guide CSV (every order type → box), print-friendly report view for Save as PDF. |
 | M10 | Landing page + design polish + units toggle         | done    | Landing page (hook, 3 placeholder facts, sample/own-data CTAs, how it works), kraft/green theme, units toggle; no horizontal scroll at 390 px. |
 | M11 | Custom mode                                         | done    | Custom candidates (tight box per order type, compact/EP/near-cube layouts, 300 cap + coverage), UI mode toggle; sample custom run 242 ms native (target < 10 s). |
-| M12 | Validation + /method page                           | pending |      |
+| M12 | Validation + /method page                           | done    | validate(): 25-candidate reduced instance, brute force over all 2- and 3-box sets; /method page (pipeline, p-median, packer, live validation: 0.00% gap, assumptions, privacy). |
 | M13 | E2E + docs + local production check                 | pending |      |
 | S1  | AI column mapping                                   | skipped | Later, per PRD. |
 | S2  | Python benchmark (stretch)                          | pending |      |

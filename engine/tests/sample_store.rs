@@ -104,3 +104,20 @@ fn custom_mode_on_sample_store() {
         .iter()
         .all(|f| f.reason != box_engine::types::FlagReason::FitsNoCandidate));
 }
+
+#[test]
+fn validation_on_sample_store() {
+    for mode in [Mode::Stock, Mode::Custom] {
+        let input = common::sample_input(mode);
+        let v = box_engine::validate::run_validate(&input).expect("validate");
+        println!("validate {mode:?}: {:?}", v.cases);
+        assert_eq!(v.candidates_used, 25);
+        assert_eq!(v.cases.len(), 2);
+        assert_eq!(v.cases[0].combinations, 300);
+        assert_eq!(v.cases[1].combinations, 2300);
+        for c in &v.cases {
+            assert!(c.heuristic_usd + 1e-6 >= c.optimal_usd);
+            assert!(c.gap_pct < 1.0, "gap {}", c.gap_pct);
+        }
+    }
+}
