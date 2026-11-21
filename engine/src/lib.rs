@@ -5,6 +5,7 @@
 
 pub mod candidates;
 pub mod config;
+pub mod packer;
 pub mod types;
 
 use wasm_bindgen::prelude::*;
