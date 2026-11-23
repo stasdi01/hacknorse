@@ -3,28 +3,28 @@ import { ArrowRight, BarChart3, Boxes, Lock, Package, Scale, Upload } from "luci
 import { Button } from "@/components/ui/button";
 import { APP_NAME, APP_TAGLINE } from "@/config/app";
 
-/**
- * Facts for the landing page. PLACEHOLDERS: the team fills in verified
- * numbers and sources before presenting (PRD §15).
- */
+/** Facts for the landing page, each with the source it comes from. */
 const FACTS = [
   {
     icon: Package,
-    value: "[X]%",
-    text: "of the average e-commerce parcel is empty space.",
-    source: "Source: [to be added by the team]",
+    value: "24%",
+    text: "of the volume of an average e-commerce package is empty space.",
+    source: "DHL Supply Chain packaging research",
+    href: "https://www.packagingtechtoday.com/markets/e-commerce/reconfiguring-the-packaging-process-for-e-commerce/",
   },
   {
     icon: Scale,
-    value: "DIM",
-    text: "Carriers bill by box size, not only weight. Oversized boxes cost more to ship.",
-    source: "Source: [carrier DIM weight rules, to be added]",
+    value: "÷ 139",
+    text: "UPS and FedEx bill by box size: length × width × height ÷ 139, whenever that is more than the actual weight in pounds.",
+    source: "UPS and FedEx dimensional weight rules",
+    href: "https://www.fedex.com/en-us/small-business/peer-insights/packaging-tips/what-is-dimensional-weight.html",
   },
   {
     icon: Boxes,
-    value: "[X] bn",
-    text: "boxes are shipped every year; every unnecessary inch is cardboard and truck space.",
-    source: "Source: [to be added by the team]",
+    value: "23.1 bn",
+    text: "parcels were shipped in the U.S. in 2025. Every unnecessary inch is cardboard and truck space.",
+    source: "Pitney Bowes Parcel Shipping Index, 2026",
+    href: "https://www.pitneybowes.com/us/shipping-index.html",
   },
 ];
 
@@ -88,7 +88,12 @@ export default function Home() {
               <f.icon className="size-6 text-kraft" aria-hidden />
               <p className="text-3xl font-semibold tracking-tight">{f.value}</p>
               <p>{f.text}</p>
-              <p className="text-xs text-muted-foreground">{f.source}</p>
+              <p className="text-xs text-muted-foreground">
+                Source:{" "}
+                <a href={f.href} target="_blank" rel="noreferrer" className="underline">
+                  {f.source}
+                </a>
+              </p>
             </div>
           ))}
         </div>

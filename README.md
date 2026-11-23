@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/stasdi01/hacknorse/actions/workflows/ci.yml/badge.svg)](https://github.com/stasdi01/hacknorse/actions/workflows/ci.yml)
 
-> **Stop shipping air.** HackNorse 2026 · Sustainability track
+> **Stop shipping air.** HackNorse 2026 · Sustainability track · **1st place**
 
 Small online stores buy shipping boxes by guesswork, so many orders ship in boxes much bigger
 than the items. That wastes cardboard and truck space, and it costs money, because carriers bill
@@ -151,9 +151,11 @@ Full write-up: [docs/METHOD.md](docs/METHOD.md) and the `/method` page in the ap
 7. **Validation:** brute force over every 2- and 3-box combination of a reduced 25-candidate
    instance. On the sample store the gap is **0.00%**.
 
-Sample store results (default settings, K = 4): stock catalog saves about **8%** of shipping + box
-cost (empty space 82% → 79%); custom sizes save about **10%** (82% → 77%). Native run time 0.1 s
-(stock) and 0.25 s (custom).
+Sample store results (default settings, K = 4, 3 current boxes as the baseline): the stock catalog
+saves **11.4%** of shipping + box + void-fill cost and ships **25%** less air; custom sizes save
+**10.1%** and ship **27%** less air. With K = 2 the result is worse than the current boxes. Full
+table for K = 2..8 in [docs/PROGRESS.md](docs/PROGRESS.md). Native run time 0.1 s (stock) and
+0.25 s (custom).
 
 ## Tests
 
@@ -197,7 +199,7 @@ All constants live in [`engine/src/config.rs`](engine/src/config.rs) and
 | Custom box price             | stock formula × 1.25                                   | estimate                     |
 | Void fill cost               | $0.50 per ft³ of void (usable volume − item volume)    | verify with supplier; editable in UI |
 | Padding                      | 0.5 in per side (0–2 in in UI)                         | default                      |
-| Landing-page facts           | placeholders                                           | team to fill in with sources |
+| Landing-page facts           | 24% empty space (DHL), ÷139 DIM (UPS/FedEx), 23.1 bn U.S. parcels in 2025 (Pitney Bowes) | sourced, linked on the page |
 
 ## Benchmark
 
@@ -211,4 +213,9 @@ pure-Python port give identical answers; Rust is about 55× faster (14 ms vs. 80
 - [docs/PROGRESS.md](docs/PROGRESS.md): milestone checklist
 - [docs/DECISIONS.md](docs/DECISIONS.md): decisions where the PRD was open
 
-Deployment is not part of this build (the team deploys `web/` to Vercel later).
+Live at <https://hacknorse.vercel.app> (deployed from `web/` on Vercel).
+
+## Team
+
+Built in 24 hours at HackNorse 2026, Luther College's first hackathon, by Dimitrije Stasic and
+Ahmed Mohamed. First place.

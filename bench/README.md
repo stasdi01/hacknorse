@@ -21,6 +21,8 @@ answer agrees, and prints the table below. (`bench/instance.json` is generated a
 
 ## Results
 
+Measured on the earlier 83-size stock catalog (before the 170-size catalog in M14).
+
 Sample store ("Fern & Kiln", 3,000 orders): 969 order types (929 multi-item) × 83 stock boxes
 = 80,427 fit checks, padding 0.5 in. Apple Silicon laptop (arm64), Python 3.12.3, Rust 1.100
 release build.
